@@ -1,0 +1,23 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+
+# Virtual environments
+venv/
+.venv/
+env/
+
+# macOS / editor cruft
+.DS_Store
+.idea/
+.vscode/
+
+# Omnilibrary scan output
+.omnilibrary_thumbs/
+
+# Real sample images live on an external volume — never commit the symlink.
+sample_images/

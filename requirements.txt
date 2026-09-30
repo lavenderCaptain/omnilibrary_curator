@@ -1,0 +1,52 @@
+# Omnilibrary Curation App — dependency manifest
+#
+# Pinned to the versions installed in the local macOS (Apple Silicon, M2) venv
+# for reproducibility. All heavy compute targets the MPS backend (torch MPS is
+# available; CUDA is not on this hardware).
+#
+# Core stack ---------------------------------------------------------------
+
+# Database / vector index
+duckdb==1.5.6
+numpy==2.5.3
+scipy==1.18.1
+
+# Computer-vision / ML core (MPS backend)
+torch==2.14.0
+torchvision==0.29.0
+# dino v2 vision transformer weights. Installed offline; do NOT rely on
+# pip/network at runtime for weight download.
+
+# Image IO / metadata
+pillow==12.3.0
+rawpy==0.27.1           # embedded-JPEG extraction + EXIF from RAW (libraw)
+imagehash==4.3.2        # perceptual hashing (pHash/dHash) for dedup
+
+# GUI (Qt 6 for Python)
+PySide6==6.11.2
+
+# Metadata extraction. Provides the `exiftool` Python API and (when the
+# bundled binary is found) a portable exiftool executable. Optional at runtime;
+# the scanner falls back to rawpy/Pillow when exiftool is unavailable.
+PyExifTool==0.5.6
+
+# Optional experimental enhancement (not required for Phase 1).
+# Cluster photos using time + GPS + camera body + visual embeddings.
+# Install only when an environment that can fetch it is available.
+# hdbscan>=0.8.4
+
+# --------------------------------------------------------------------------
+# NOTES
+# --------------------------------------------------------------------------
+# * DuckDB 1.5.6 ships a native DOUBLE[] array type but NOT the `vector`
+#   extension (duckdb-vector), which currently does not host an Apple Silicon
+#   build (HTTP 404). Vectors are therefore stored as DOUBLE[] columns until a
+#   compatible vector extension becomes installable. The database layer
+#   abstracts this so it can be swapped to real VECTOR types later without
+#   touching callers.
+# * exiftool itself is a separate Homebrew formula (`brew install exiftool`).
+#   It is an optional acceleration path; the scanner works without it.
+# --------------------------------------------------------------------------
+
+# Development / testing
+pytest==9.1.1
