@@ -76,8 +76,8 @@ CREATE TABLE IF NOT EXISTS media_items (
     timestamp_utc       TIMESTAMP,
     -- gps = DOUBLE[2] = [lat, lon]
     gps                 DOUBLE[2],
-    -- p_hash = 64-bit integer (imagehash)
-    p_hash              BIGINT,
+    -- p_hash is a 64-bit imagehash stored as UINT64 (imagehash is unsigned)
+    p_hash              UINT64,
     -- dinov2_vector = DOUBLE[] (768-d for dinov2_vits14)
     dinov2_vector       DOUBLE[],
     aesthetic_score     DOUBLE,
