@@ -377,6 +377,17 @@ class Database:
             ).fetchall()
         ]
 
+    def all_items(self) -> list[MediaItem]:
+        """Return every stored :class:`MediaItem` in one query.
+
+        Used by the offline clustering engine to load all rows at once without
+        the ``vector`` extension.
+        """
+        rows = self._conn.execute(
+            "SELECT * FROM media_items"
+        ).fetchall()
+        return [_row_to_item(r) for r in rows]
+
 
 # ---------------------------------------------------------------------------
 # Conversion helpers
